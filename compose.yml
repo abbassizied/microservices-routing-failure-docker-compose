@@ -3,9 +3,7 @@
 ##############################################
 services:
   config-server:
-    build:
-      context: . # Root project dir
-      dockerfile: config-server/Dockerfile
+    build: ./Dockerfile.config-server
     container_name: config-server
     restart: unless-stopped
     deploy:
@@ -20,12 +18,10 @@ services:
     ports:
       - 8888:8888
     networks:
-      - my_app_network
+      - microservices-net
 
   discovery-service:
-    build:
-      context: . # Root project dir
-      dockerfile: discovery-service/Dockerfile
+    build: ./Dockerfile.discovery-service
     container_name: discovery-service
     restart: unless-stopped
     environment:
@@ -45,12 +41,10 @@ services:
     ports:
       - 8761:8761
     networks:
-      - my_app_network
+      - microservices-net
 
   service-a:
-    build:
-      context: . # Root project dir
-      dockerfile: service-a/Dockerfile
+    build: ./Dockerfile.service-a
     container_name: service-a
     restart: unless-stopped
     environment:
@@ -73,12 +67,10 @@ services:
     ports:
       - 8081:8081
     networks:
-      - my_app_network
+      - microservices-net
 
   service-b:
-    build:
-      context: . # Root project dir
-      dockerfile: service-b/Dockerfile
+    build: ./Dockerfile.service-b
     container_name: service-b
     restart: unless-stopped
     environment:
@@ -101,12 +93,10 @@ services:
     ports:
       - 8082:8082
     networks:
-      - my_app_network
+      - microservices-net
 
   gateway-service:
-    build:
-      context: . # Root project dir
-      dockerfile: gateway-service/Dockerfile
+    build: ./Dockerfile.gateway-service
     container_name: gateway-service
     restart: unless-stopped
     environment:
@@ -133,11 +123,11 @@ services:
     ports:
       - 8989:8989
     networks:
-      - my_app_network
+      - microservices-net
 
 ##############################################
 ##############################################
 
 networks:
-  my_app_network:
+  microservices-net:
     driver: bridge
