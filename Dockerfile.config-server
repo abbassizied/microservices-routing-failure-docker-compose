@@ -2,19 +2,15 @@
 ############ Stage 1: Build the application #################
 #############################################################
 FROM maven:3.9.11-eclipse-temurin-21 AS builder
+
 WORKDIR /app
-# 1. Copy parent POM first (essential for multi-module projects)
-# Parent POM
-COPY pom.xml .  
-# Submodule POM
-COPY config-server/pom.xml ./config-server/
 
-# 2. Download dependencies (faster rebuilds when only code changes)
+COPY . .
+
+# Download dependencies (faster rebuilds when only code changes)
 RUN mvn dependency:go-offline -pl config-server
-# 3. Copy source code
-COPY config-server/src ./config-server/src/
 
-# 4. Build the specific submodule
+# Build the specific submodule
 RUN mvn package -pl config-server -am -DskipTests
 
 #############################################################
@@ -24,7 +20,7 @@ FROM eclipse-temurin:21.0.7_6-jdk
 WORKDIR /app
 COPY --from=builder /app/config-server/target/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
 #############################################################
 #############################################################
 #############################################################

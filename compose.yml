@@ -3,7 +3,9 @@
 ##############################################
 services:
   config-server:
-    build: ./Dockerfile.config-server
+    build:
+      context: .
+      dockerfile: Dockerfile.config-server
     container_name: config-server
     restart: unless-stopped
     deploy:
@@ -21,7 +23,9 @@ services:
       - microservices-net
 
   discovery-service:
-    build: ./Dockerfile.discovery-service
+    build:
+      context: .
+      dockerfile: Dockerfile.discovery-service
     container_name: discovery-service
     restart: unless-stopped
     environment:
@@ -44,7 +48,9 @@ services:
       - microservices-net
 
   service-a:
-    build: ./Dockerfile.service-a
+    build:
+      context: .
+      dockerfile: Dockerfile.service-a
     container_name: service-a
     restart: unless-stopped
     environment:
@@ -70,7 +76,9 @@ services:
       - microservices-net
 
   service-b:
-    build: ./Dockerfile.service-b
+    build:
+      context: .
+      dockerfile: Dockerfile.service-b
     container_name: service-b
     restart: unless-stopped
     environment:
@@ -96,7 +104,9 @@ services:
       - microservices-net
 
   gateway-service:
-    build: ./Dockerfile.gateway-service
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway-service
     container_name: gateway-service
     restart: unless-stopped
     environment:
